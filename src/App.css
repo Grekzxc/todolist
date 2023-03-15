@@ -3,16 +3,17 @@
   display: flex;
 }
 
-.App > div {
+.App>div {
   margin-right: 50px;
 }
 
 .todolist {
-  border: 2px solid hotpink;
+  border: 2px solid rgb(123, 74, 238);
   border-radius: 5px;
   padding: 20px;
   background-color: darkseagreen;
 }
+
 .todolist-empty {
   border: 2px solid hotpink;
   border-radius: 5px;
