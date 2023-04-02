@@ -10,34 +10,57 @@ export type TaskType = {
     isDone: boolean
 }
 export type FilterValuesType = 'All' | 'Active' | 'Completed'
-
+type TodoListType = {
+    id: string
+    title: string
+    filter: FilterValuesType
+}
+type TasksStateType = {
+    [todoList_Id: string]: Array<TaskType>
+}
 function App(): JSX.Element {
-    const [tasks, setTasks] = useState<Array<TaskType>>(
-        [
+    const todoList_1 = v1()
+    const todoList_2 = v1()
+    const [todoList, setTodolist] = useState<Array<TodoListType>>([
+        { id: todoList_1, title: 'What to learn', filter: 'All' },
+        { id: todoList_2, title: 'What to buy', filter: 'Active' },
+    ])
+    const [tasks, setTasks] = useState<TasksStateType>({
+        [todoList_1]: [
             { id: v1(), title: 'Html & CSS', isDone: true },
             { id: v1(), title: 'JS', isDone: true },
             { id: v1(), title: 'ES6/TS', isDone: false },
             { id: v1(), title: 'React', isDone: false },
-        ]
-    )
-    const removeTask = (taskId: string) => {
-        setTasks(tasks.filter((task) => task.id !== taskId))
+        ],
+        [todoList_2]: [
+            { id: v1(), title: 'Milk', isDone: true },
+            { id: v1(), title: 'Bread', isDone: true },
+            { id: v1(), title: 'Solt', isDone: false },
+            { id: v1(), title: 'Meat', isDone: false },
+        ],
+    })
+    const changeTodoListFilter = (filter: FilterValuesType, todoList_Id: string) => {
+        setTodolist(todoList.map(tl => tl.id === todoList_Id ? { ...tl, filter: filter } : tl))
     }
-    const addTask = (title: string) => {
-        const newTask: TaskType = {
-            id: v1(),
-            title: title,
-            isDone: false
-        }
-        setTasks([newTask, ...tasks])
+    const removeTask = (taskId: string, todoList_Id: string) => {
+        setTasks({ ...tasks, [todoList_Id]: tasks[todoList_Id].filter(task => task.id !== taskId) })
     }
-    const changeTaskStatus = (taskId: string, newIsDone: boolean) => {
-        setTasks(tasks.map(t => t.id === taskId ? { ...t, isDone: newIsDone } : t))
+    const addTask = (title: string, todoList_Id: string) => {
+        const newTask: TaskType = { id: v1(), title: title, isDone: false }
+        setTasks({ ...tasks, [todoList_Id]: [newTask, ...tasks[todoList_Id]] })
     }
-    const [filter, setFilter] = useState<FilterValuesType>('All')
-    const changeTodoListFilter = (filter: FilterValuesType) => {
-        setFilter(filter)
+    const changeTaskStatus = (taskId: string, newIsDone: boolean, todoList_Id: string) => {
+        setTasks({
+            ...tasks, [todoList_Id]: tasks[todoList_Id]
+                .map(t => t.id === taskId ? { ...t, isDone: newIsDone } : t)
+        })
+
     }
+    const removeTodoList = (todoList_Id: string) => {
+        setTodolist(todoList.filter(tl => tl.id !== todoList_Id))
+        delete tasks[todoList_Id]
+    }
+
 
     const getFilteredTaskRender = (tasksList: Array<TaskType>, filterValue: FilterValuesType) => {
         switch (filterValue) {
@@ -46,30 +69,29 @@ function App(): JSX.Element {
             default: return tasksList
         }
     }
-    const tasksForRender: Array<TaskType> = getFilteredTaskRender(tasks, filter)
-    return (
-        <div className='App'>
+    const todoListComponent = todoList.map(tl => {
+        const tasksForRender: Array<TaskType> = getFilteredTaskRender(tasks[tl.id], tl.filter)
+        return (
             <TodoList
-                removeTask={removeTask}
-                title={'What to learn'}
+                key={tl.id}
+                todoList_Id={tl.id}
+                filter={tl.filter}
+                title={tl.title}
                 tasks={tasksForRender}
+                removeTask={removeTask}
                 addTask={addTask}
                 changeTodoListFilter={changeTodoListFilter}
                 changeTaskStatus={changeTaskStatus}
-                filter={filter}
+                removeTodoList={removeTodoList}
             />
-
-            {/* <TodoList title={'What to learn'} tasks={tasks1} /> */}
+        )
+    })
+    return (
+        <div className='App'>
+            {todoListComponent}
         </div>
     )
+
 }
 export default App;
 
-
-
-
-// const tasks1: TaskType[] = [
-//     { id: 1, title: 'Html & CSS', isDone: true },
-//     { id: 2, title: 'JS', isDone: true },
-//     { id: 3, title: 'ES6/TS', isDone: true }
-// ]
