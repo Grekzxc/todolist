@@ -1,24 +1,26 @@
-.App {
+/* .App {
   padding: 30px;
   display: flex;
 }
 
 .App>div {
   margin-right: 50px;
-}
+} */
 
 .todolist {
+  width: 280px !important;
   border: 2px solid rgb(123, 74, 238);
   border-radius: 5px;
   padding: 20px;
-  background-color: darkseagreen;
+  background-color: rgb(128, 146, 128);
 }
 
 .todolist-empty {
-  border: 2px solid hotpink;
+  width: 280px;
+  border: 2px solid rgb(97, 75, 87);
   border-radius: 5px;
   padding: 20px;
-  background-color: darksalmon;
+  background-color: rgba(133, 99, 88, 0.644);
 }
 
 .task {
@@ -40,4 +42,15 @@
 .input_error {
   outline: none;
   border: 2px solid #c07ba5;
+}
+
+.btn_filter_container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.add_form {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
 }
