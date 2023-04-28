@@ -24,7 +24,6 @@ export const TodolistReduser = (state: TodoListType[], action: TsarTypeAction): 
 type TsarTypeAction = removeTodolistACType | addTodolistACType | changeTodoListTitleACType | changeTodoListFilterACType
 
 type removeTodolistACType = ReturnType<typeof removeTodolistAC>
-
 export const removeTodolistAC = (todolistId: string) => {
     return {
         type: 'REMOVE_TODOLIST',
@@ -36,7 +35,6 @@ export const removeTodolistAC = (todolistId: string) => {
 }
 
 type addTodolistACType = ReturnType<typeof addTodolistAC>
-
 export const addTodolistAC = (title: string) => {
     return {
         type: 'ADD_TODOLIST',
