@@ -17,7 +17,7 @@ export type TodoListType = {
     title: string
     filter: FilterValuesType
 }
-type TasksStateType = {
+export type TasksStateType = {
     [todoList_Id: string]: Array<TaskType>
 }
 function App(): JSX.Element {
@@ -156,7 +156,10 @@ function App(): JSX.Element {
                 </AppBar>
                 <Container fixed>
                     <Grid container sx={{ p: '15px 0' }}>
-                        <AddItemForm addItem={addTodoList} reccommendedTitleLength={15} maxTitleLength={20} />
+                        <AddItemForm
+                            addItem={addTodoList}
+                            reccommendedTitleLength={15}
+                            maxTitleLength={20} />
                     </Grid>
                     <Grid container spacing={3}>
                         {todoListComponent}
@@ -165,7 +168,6 @@ function App(): JSX.Element {
             </div>
         </ThemeProvider>
     )
-
 }
 export default App;
 

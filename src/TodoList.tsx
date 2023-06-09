@@ -5,7 +5,6 @@ import AddItemForm from "./AddItemForm";
 import EditableSpan from "./EditableSpan";
 import { Button, IconButton, List, ListItem, Typography } from "@mui/material";
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import { CheckBox } from "@mui/icons-material";
 import Checkbox from '@mui/material/Checkbox';
 
 
